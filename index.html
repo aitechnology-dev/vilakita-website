@@ -80,18 +80,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .hero .wrap{position:relative;z-index:2}
 .hero h1{font-size:clamp(3rem,10vw,6.4rem);max-width:12ch}
 .hero p.lead{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--cream);opacity:.88;max-width:46ch;margin:20px 0 32px}
-.hero-foot{margin-top:30px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.dots{display:flex;gap:14px}
-.dots button{position:relative;width:104px;padding:12px 0 0;background:none;border:0;cursor:pointer;font:inherit;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;text-align:left;color:var(--muted);transition:color .3s}
-.dots button::before,.dots button::after{content:"";position:absolute;top:0;left:0;height:1px}
-.dots button::before{right:0;background:rgba(243,232,214,.25)}
-.dots button::after{width:0;background:var(--gold2)}
-.dots button:hover,.dots button.on{color:var(--cream)}
-.dots button.on::after{animation:fill 6s linear forwards}
-@keyframes fill{to{width:100%}}
-
 /* borang tempah */
-.book{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:1px;max-width:940px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.35);scroll-margin-top:120px}
+.book{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:1px;max-width:940px;margin-inline:auto;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.35);scroll-margin-top:120px}
 .fld{display:flex;flex-direction:column;gap:4px;padding:13px 18px;background:rgba(20,16,12,.72);cursor:pointer;transition:background .25s}
 .fld:focus-within{background:rgba(35,28,22,.92)}
 .fld label{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);cursor:pointer}
@@ -100,10 +90,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .fld select option{background:var(--bg2)}
 .book .btn{border-radius:0;justify-content:center;padding:14px 26px}
 .book .btn:hover{transform:none;filter:brightness(1.08)}
-.book-note{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;font-size:.82rem;color:var(--muted)}
+.book-note{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:14px;font-size:.82rem;color:var(--muted)}
 .book-note a{color:var(--gold2)} .book-note a:hover{color:var(--cream)}
-.hero .loc{display:flex;gap:28px;flex-wrap:wrap;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.hero .loc span::before{content:"◆";color:var(--gold);margin-right:10px;font-size:.6rem;vertical-align:2px}
 
 /* intro */
 .intro{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
@@ -197,7 +185,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   section{padding:72px 0}
   .book{grid-template-columns:repeat(2,minmax(0,1fr))}
   .book .btn{grid-column:1/-1}
-  .dots button{width:30px;font-size:0}
 }
 @media (max-width:520px){
   .fgrid{grid-template-columns:1fr}
@@ -242,10 +229,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <button class="btn btn-wa" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Semak tarikh kosong</button>
     </form>
     <div class="book-note"><span id="booknote">Pilih tarikh, kami balas di WhatsApp.</span><a href="#galeri">Lihat galeri →</a></div>
-    <div class="hero-foot">
-      <div class="loc"><span>Casa Hill, Mentakab</span><span>Pahang</span><span>Sesuai untuk keluarga</span></div>
-      <div class="dots" id="dots" aria-label="Pilih gambar"></div>
-    </div>
   </div>
 </header>
 
@@ -452,17 +435,12 @@ book.addEventListener("submit", e=>{
 document.querySelector(".nav-cta").addEventListener("click", ()=> setTimeout(()=> fin.focus({preventScroll:true}), 600));
 
 /* hero slideshow */
-const slides = [...document.querySelectorAll(".slide")], dots = document.getElementById("dots");
+const slides = [...document.querySelectorAll(".slide")];
 const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let si = 0, timer;
-slides.forEach((s,i)=>{ const b = document.createElement("button");
-  b.type = "button"; b.textContent = s.dataset.label; b.setAttribute("aria-label", "Gambar: " + s.dataset.label);
-  b.onclick = ()=>{ go(i); play(); }; dots.append(b); });
-const go = i => { si = (i + slides.length) % slides.length;
-  slides.forEach((s,k)=> s.classList.toggle("on", k===si));
-  [...dots.children].forEach(b=> b.classList.remove("on")); void dots.offsetWidth; dots.children[si].classList.add("on"); };
+const go = i => { si = (i + slides.length) % slides.length; slides.forEach((s,k)=> s.classList.toggle("on", k===si)); };
 const play = ()=>{ clearInterval(timer); if (!still) timer = setInterval(()=> go(si+1), 6000); };
-document.addEventListener("visibilitychange", ()=>{ if (document.hidden) clearInterval(timer); else { go(si); play(); } });
+document.addEventListener("visibilitychange", ()=>{ if (document.hidden) clearInterval(timer); else play(); });
 requestAnimationFrame(()=> requestAnimationFrame(()=>{ go(0); play(); }));
 document.getElementById("ig").href = "https://instagram.com/" + CONFIG.instagram;
 document.getElementById("igtext").textContent = "@" + CONFIG.instagram;
