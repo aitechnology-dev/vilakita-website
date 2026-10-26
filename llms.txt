@@ -15,6 +15,6 @@
 Percutian keluarga, reunion, kumpulan kawan-kawan dan majlis kecil.
 
 ## Pautan
-- Laman utama: https://DOMAINKAU.com/
+- Laman utama: https://vilakita.vercel.app/
 - Lokasi Waze: https://waze.com/ul/hw28gbf2u1
 - Google Maps: https://www.google.com/maps/search/?api=1&query=3.48475,102.33874
