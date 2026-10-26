@@ -67,7 +67,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .btn-wa{background:var(--wa);color:#08240f;font-weight:500}
 .btn-ghost{border:1px solid var(--line);color:var(--cream);background:rgba(255,255,255,.03)}
 .btn svg{width:18px;height:18px}
-.nav-cta{padding:10px 18px;font-size:.8rem}
+.nav-cta{padding:10px 20px 10px 16px;font-size:.84rem;gap:8px;animation:pulse 2.6s infinite}
+.nav-cta svg{width:17px;height:17px}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:110px 0 56px;overflow:hidden}
@@ -176,10 +177,8 @@ details p{color:var(--muted);margin-top:10px;max-width:62ch}
 footer{padding:40px 0;border-top:1px solid var(--line);font-size:.8rem;color:var(--muted)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
-/* floating wa */
-.fab{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:pulse 2.6s infinite}
-.fab svg{width:28px;height:28px;fill:#fff}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.5),0 10px 30px rgba(0,0,0,.4)}50%{box-shadow:0 0 0 14px rgba(37,211,102,0),0 10px 30px rgba(0,0,0,.4)}}
+/* denyut butang tempah */
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}70%,100%{box-shadow:0 0 0 12px rgba(37,211,102,0)}}
 
 /* lightbox */
 .lb{position:fixed;inset:0;z-index:100;background:rgba(10,8,6,.94);display:none;align-items:center;justify-content:center;padding:20px}
@@ -203,7 +202,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media (max-width:520px){
   .fgrid{grid-template-columns:1fr}
   .fld{padding:12px 14px}
-  .nav-cta{display:none}
+  .nav-cta{padding:9px 16px 9px 13px;font-size:.8rem}
   .gallery{columns:1}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
@@ -220,7 +219,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="navlinks">
       <a href="#kemudahan">Kemudahan</a><a href="#galeri">Galeri</a><a href="#lokasi">Lokasi</a><a href="#soalan">Soalan</a>
     </div>
-    <a class="btn btn-wa nav-cta" href="#tempah">Tempah</a>
+    <a class="btn btn-wa nav-cta" href="#tempah"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Tempah</a>
   </div>
 </nav>
 
@@ -390,7 +389,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   </div>
 </footer>
 
-<a class="fab wa-link" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#wa"/></svg></a>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true">
   <button class="x" aria-label="Tutup">×</button>
