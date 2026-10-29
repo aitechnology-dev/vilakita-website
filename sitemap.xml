@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://vilakita.vercel.app/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://vilakita.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vilakita.vercel.app/en/"/>
     <image:image><image:loc>https://vilakita.vercel.app/images/vila-kita-lobi-mentakab.jpg</image:loc></image:image>
     <image:image><image:loc>https://vilakita.vercel.app/images/kolam-renang-berbumbung-homestay-mentakab.jpg</image:loc></image:image>
     <image:image><image:loc>https://vilakita.vercel.app/images/bilik-movie-karaoke-homestay-mentakab.jpg</image:loc></image:image>
@@ -12,5 +14,11 @@
     <image:image><image:loc>https://vilakita.vercel.app/images/dapur-island-vila-kita.jpg</image:loc></image:image>
     <image:image><image:loc>https://vilakita.vercel.app/images/ruang-movie-sofa-vila-kita.jpg</image:loc></image:image>
     <image:image><image:loc>https://vilakita.vercel.app/images/bubble-dome-homestay-mentakab.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://vilakita.vercel.app/en/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://vilakita.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vilakita.vercel.app/en/"/>
   </url>
 </urlset>

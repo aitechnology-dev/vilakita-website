@@ -18,13 +18,26 @@
 - Tol LPT Temerloh (Exit 819): 12.3 km (15 minit)
 - Hospital Sultan Haji Ahmad Shah: 17.3 km (20 minit)
 - Pusat Konservasi Gajah Kuala Gandah: 34.2 km (40 minit)
+- Kancil Raja Patin, Jalan Temerloh–Jerantut: 7.2 km (10 minit)
+- Go' Bang Maju Patin Tempoyak, Kampung Raja: 9.2 km (13 minit)
+- Gerai Esplanade Temerloh: 12.2 km (15 minit)
+- Selera Patin Bangau, Kampung Bangau: 14.6 km (20 minit)
 - Kuala Lumpur: 117 km (lebih kurang 1 jam 45 minit)
 - Kuantan: 135 km (lebih kurang 1 jam 45 minit)
+
+## Maklumat penginapan
+- Status: dibuka dan menerima tempahan
+- Check-in: 3:00 petang
+- Check-out: 12:00 tengah hari
+- Deposit keselamatan: RM200 (dipulangkan selepas check-out jika tiada kerosakan atau kehilangan)
+- Merokok dan vape di dalam rumah: tidak dibenarkan
+- Haiwan peliharaan: tidak dibenarkan
 
 ## Sesuai untuk
 Percutian keluarga, reunion, kumpulan kawan-kawan dan majlis kecil.
 
 ## Pautan
 - Laman utama: https://vilakita.vercel.app/
+- English version: https://vilakita.vercel.app/en/
 - Lokasi Waze: https://waze.com/ul/hw28gbf2u1
 - Google Maps: https://www.google.com/maps/search/?api=1&query=3.48475,102.33874
