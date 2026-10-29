@@ -97,6 +97,33 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .book .btn{border-radius:0;justify-content:center;padding:14px 26px}
 .book .btn:hover{transform:none;filter:brightness(1.08)}
 .book-note{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:14px;font-size:.82rem;color:var(--muted)}
+.fld .dv{background:none;border:0;padding:0;color:var(--cream);font:inherit;font-size:1rem;font-weight:400;text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fld .dv.ph{color:var(--muted)}
+
+/* kalender tarikh kosong */
+.cal{position:fixed;inset:0;z-index:90;background:rgba(10,8,6,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+.cal.on{display:flex}
+.cal-box{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:20px 22px;width:min(680px,100%);max-height:100%;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.5);outline:0}
+.cal-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.cal-hd span{font-size:.88rem;color:var(--muted);text-align:center}
+.cal-nav{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--cream);font-size:1.3rem;line-height:1;cursor:pointer}
+.cal-nav:disabled{opacity:.25;cursor:default}
+.cal-months{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:32px}
+.cal-m b{display:block;text-align:center;font-family:var(--serif);font-weight:500;font-size:1.3rem;margin-bottom:8px;text-transform:capitalize}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px 0}
+.cal-g i{font-style:normal;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:center;padding:4px 0 6px}
+.cal-g button{aspect-ratio:1;max-height:44px;border:0;border-radius:50%;background:none;color:var(--cream);font:inherit;font-size:.92rem;font-weight:400;cursor:pointer}
+.cal-g button:hover:not(:disabled){background:rgba(201,164,106,.18)}
+.cal-g button:disabled{color:var(--muted);opacity:.3;cursor:default}
+.cal-g button.x{text-decoration:line-through;opacity:.45}
+.cal-g button.r{background:rgba(201,164,106,.14);border-radius:0}
+.cal-g button.s,.cal-g button.e{background:var(--gold);color:var(--bg);font-weight:500}
+.cal-ft{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.cal-ft s{opacity:.6;margin-right:4px} .cal-ft u{text-decoration:none;color:var(--cream);margin-right:4px}
+#cal-st{flex-basis:100%;order:-1;color:var(--gold2)} #cal-st:empty{display:none}
+.cal-clr{margin-left:auto}
+.cal-ft button{background:none;border:1px solid var(--line);border-radius:999px;color:var(--cream);font:inherit;padding:8px 18px;cursor:pointer}
+.cal-ft .cal-ok{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:500}
 .book-note a{color:var(--gold2)} .book-note a:hover{color:var(--cream)}
 
 /* intro */
@@ -201,6 +228,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .fld{padding:12px 14px}
   .nav-cta{padding:9px 16px 9px 13px;font-size:.8rem}
   .gallery{columns:1}
+  .cal{align-items:flex-end;padding:0}
+  .cal-box{border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
@@ -232,8 +261,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <h1>Homestay berkolam di <em>Mentakab.</em></h1>
     <p class="lead">Kolam renang berbumbung, bilik movie dan karaoke, pool table serta bubble dome dalam satu kediaman. Sesuai untuk keluarga dan kumpulan.</p>
     <form class="book" id="tempah">
-      <div class="fld"><label for="f-in">Check-in</label><input type="date" id="f-in" required></div>
-      <div class="fld"><label for="f-out">Check-out</label><input type="date" id="f-out" required></div>
+      <div class="fld" data-cal="in"><label for="f-in">Check-in</label><button type="button" class="dv ph" id="f-in">Pilih tarikh</button></div>
+      <div class="fld" data-cal="out"><label for="f-out">Check-out</label><button type="button" class="dv ph" id="f-out">Pilih tarikh</button></div>
       <div class="fld"><label for="f-ad">Dewasa</label><select id="f-ad"></select></div>
       <div class="fld"><label for="f-kid">Kanak-kanak</label><select id="f-kid"></select></div>
       <button class="btn btn-wa" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Semak tarikh kosong</button>
@@ -398,6 +427,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <button class="nx" aria-label="Seterusnya">›</button>
 </div>
 
+<div class="cal" id="cal" role="dialog" aria-modal="true" aria-label="Pilih tarikh">
+  <div class="cal-box" tabindex="-1">
+    <div class="cal-hd"><button class="cal-nav" data-m="-1" aria-label="Bulan sebelum">‹</button><span id="cal-msg"></span><button class="cal-nav" data-m="1" aria-label="Bulan seterusnya">›</button></div>
+    <div class="cal-months" id="cal-months"></div>
+    <div class="cal-ft"><span><u>12</u>Kosong</span><span><s>12</s>Penuh</span><span id="cal-st"></span><button type="button" class="cal-clr">Padam</button><button type="button" class="cal-ok">Siap</button></div>
+  </div>
+</div>
+
 <svg width="0" height="0" style="position:absolute"><symbol id="wa" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2zm5.8 14.13c-.25.69-1.44 1.32-1.99 1.38-.51.06-1.15.08-1.85-.12a16.7 16.7 0 0 1-1.68-.62c-2.95-1.27-4.88-4.25-5.03-4.45-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.25.59.84 2.05.91 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.49l-.44.52c-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.06 1.14 1.01 2.1 1.33 2.4 1.48.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.67-.15.27.1 1.73.82 2.03.97.3.15.49.22.57.35.07.12.07.71-.17 1.4z"/></symbol><symbol id="ig-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></symbol></svg>
 
 <script>
@@ -430,22 +467,82 @@ const iso = d => new Date(d.getTime() - d.getTimezoneOffset()*6e4).toISOString()
 const day = s => new Date(s + "T00:00");
 const plus1 = d => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
 const fmt = (s,o) => day(s).toLocaleDateString("ms-MY", o);
-const nights = () => Math.round((day(fout.value) - day(fin.value)) / 864e5);
+let ci = "", co = "";                      // tarikh check-in / check-out terpilih (YYYY-MM-DD)
+const nights = () => Math.round((day(co) - day(ci)) / 864e5);
 const syncBook = ()=>{
-  fout.min = iso(plus1(fin.value ? day(fin.value) : new Date()));
-  if (fin.value && (!fout.value || fout.value < fout.min)) fout.value = fout.min;
-  if (fin.value && fout.value) { const o = {weekday:"short", day:"numeric", month:"short"};
-    note.textContent = nights() + " malam · " + fmt(fin.value,o) + " → " + fmt(fout.value,o); }
+  const o = {weekday:"short", day:"numeric", month:"short"};
+  [[fin,ci],[fout,co]].forEach(([b,v])=>{ b.textContent = v ? fmt(v,o) : "Pilih tarikh"; b.classList.toggle("ph", !v); });
+  calMsg.textContent = !ci ? "Pilih tarikh check-in" : !co ? "Pilih tarikh check-out"
+    : nights() + " malam · " + fmt(ci,o) + " → " + fmt(co,o);
+  note.textContent = ci && co ? calMsg.textContent : "Pilih tarikh dan kami akan membalas melalui WhatsApp.";
 };
-fin.min = iso(new Date()); syncBook();
-fin.addEventListener("change", syncBook); fout.addEventListener("change", syncBook);
-book.querySelectorAll("input[type=date]").forEach(i=> i.parentElement.addEventListener("click",()=>{ try { i.showPicker(); } catch {} }));
+
+/* kalender: malam penuh datang dari /api/availability (iCal Google Calendar / Airbnb) */
+const cal = document.getElementById("cal"), calBox = cal.querySelector(".cal-box"), calMonths = document.getElementById("cal-months"),
+      calMsg = document.getElementById("cal-msg"), calSt = document.getElementById("cal-st"), calNav = cal.querySelectorAll(".cal-nav");
+const WD = ["Isn","Sel","Rab","Kha","Jum","Sab","Ahd"], MAX_MONTHS = 12;
+let booked = new Set(), vm = new Date();
+vm.setDate(1);
+const today = () => iso(new Date());
+const nextBooked = s => { for (let d = plus1(day(s)), k = 0; k < 400; k++, d = plus1(d)) if (booked.has(iso(d))) return iso(d); return "9999"; };
+const renderCal = ()=>{
+  const t = today(), lim = ci && !co ? nextBooked(ci) : "", now = new Date(), n = innerWidth >= 720 ? 2 : 1;
+  const off = (vm.getFullYear() - now.getFullYear()) * 12 + vm.getMonth() - now.getMonth();
+  calNav[0].disabled = off <= 0; calNav[1].disabled = off + n > MAX_MONTHS;
+  calMonths.innerHTML = "";
+  for (let m = 0; m < n; m++) {
+    const first = new Date(vm.getFullYear(), vm.getMonth() + m, 1), el = document.createElement("div");
+    el.className = "cal-m";
+    el.innerHTML = "<b>" + first.toLocaleDateString("ms-MY", {month:"long", year:"numeric"}) + "</b><div class='cal-g'>" + WD.map(w=> "<i>" + w + "</i>").join("") + "</div>";
+    const g = el.lastChild;
+    for (let k = (first.getDay() + 6) % 7; k--; ) g.append(document.createElement("span"));
+    for (let d = first; d.getMonth() === first.getMonth(); d = plus1(d)) {
+      const s = iso(d), b = document.createElement("button"), full = booked.has(s);
+      b.type = "button"; b.textContent = d.getDate(); b.dataset.d = s;
+      // semasa pilih check-out: malam penuh pertama selepas check-in masih boleh jadi hari check-out
+      b.disabled = s < t || (lim && s > ci ? s > lim : full);
+      b.className = (full && s !== lim ? "x " : "") + (s === ci ? "s" : s === co ? "e" : ci && co && s > ci && s < co ? "r" : "");
+      if (full) b.title = s === lim ? "Check-out sahaja" : "Penuh";
+      g.append(b);
+    }
+    calMonths.append(el);
+  }
+};
+const openCal = which =>{
+  if (which === "out" && ci) co = "";
+  vm = ci ? day(ci) : new Date(); vm.setDate(1);
+  syncBook(); renderCal();
+  cal.classList.add("on"); document.body.style.overflow = "hidden"; calBox.focus();
+};
+const closeCal = ()=>{ cal.classList.remove("on"); document.body.style.overflow = ""; };
+calMonths.addEventListener("click", e=>{
+  const s = e.target.dataset.d;
+  if (!s || e.target.disabled) return;
+  if (ci && !co && s > ci) { co = s; setTimeout(closeCal, 300); } else { ci = s; co = ""; }
+  syncBook(); renderCal();
+});
+calNav.forEach(b=> b.addEventListener("click", ()=>{ vm = new Date(vm.getFullYear(), vm.getMonth() + +b.dataset.m, 1); renderCal(); }));
+cal.querySelector(".cal-clr").onclick = ()=>{ ci = co = ""; syncBook(); renderCal(); };
+cal.querySelector(".cal-ok").onclick = closeCal;
+cal.addEventListener("click", e=>{ if (e.target === cal) closeCal(); });
+addEventListener("keydown", e=>{ if (e.key === "Escape" && cal.classList.contains("on")) closeCal(); });
+addEventListener("resize", ()=>{ if (cal.classList.contains("on")) renderCal(); });
+book.querySelectorAll("[data-cal]").forEach(f=> f.addEventListener("click", ()=> openCal(f.dataset.cal)));
+calSt.textContent = "Memuatkan tarikh…";
+fetch("/api/availability").then(r=> r.ok ? r.json() : Promise.reject()).then(j=>{
+  booked = new Set(j.booked); calSt.textContent = "";
+  if (ci && (booked.has(ci) || co && nextBooked(ci) < co)) ci = co = "";   // pilihan awal bertembung dengan tempahan
+}).catch(()=>{ calSt.textContent = "Tarikh akan disahkan melalui WhatsApp."; })
+  .finally(()=>{ syncBook(); if (cal.classList.contains("on")) renderCal(); });
+syncBook();
+
 book.addEventListener("submit", e=>{
   e.preventDefault();
+  if (!ci || !co) return openCal(ci ? "out" : "in");
   const o = {weekday:"long", day:"numeric", month:"short", year:"numeric"}, kids = +fkid.value;
   const msg = ["Hai, saya ingin menyemak tarikh kosong di Vila Kita:",
-    "Check-in: " + fmt(fin.value,o),
-    "Check-out: " + fmt(fout.value,o) + " (" + nights() + " malam)",
+    "Check-in: " + fmt(ci,o),
+    "Check-out: " + fmt(co,o) + " (" + nights() + " malam)",
     "Tetamu: " + fad.value + " dewasa" + (kids ? ", " + kids + " kanak-kanak" : ""),
     "Boleh maklumkan harga?"].join("\n");
   trackWa();
